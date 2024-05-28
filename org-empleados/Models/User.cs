@@ -2,7 +2,6 @@
 
 namespace org_empleados.Models
 {
-    [Table("Users")]
     public class User
     {
         public required string Id { get; set; }

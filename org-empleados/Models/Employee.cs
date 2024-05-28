@@ -4,7 +4,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace org_empleados.Models
 {
-    [Table("Employees")]
     public class Employee
     {
         public required int Id { get; set; }

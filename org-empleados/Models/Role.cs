@@ -2,7 +2,6 @@
 
 namespace org_empleados.Models
 {
-    [Table("Roles")]
     public class Role
     {
         public required int Id { get; set; }
