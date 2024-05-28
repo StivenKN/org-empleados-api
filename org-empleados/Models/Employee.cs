@@ -10,6 +10,8 @@ namespace org_empleados.Models
         public required string FirstName { get; set; }
         public required string LastName { get; set; }
         public required int FkIdRole { get; set; }
+        public required DateTime UpdatedAt { get; set; }
+        public DateTime? DeletedAt { get; set; }
         public required Role Role { get; set; }
     }
 }

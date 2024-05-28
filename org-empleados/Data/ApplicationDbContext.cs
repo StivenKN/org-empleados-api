@@ -14,11 +14,36 @@ namespace org_empleados.Data
             modelBuilder.Entity<Role>()
                 .HasKey(e => e.Id);
 
+            modelBuilder.Entity<Role>()
+                .Property(e => e.DeletedAt)
+                .HasDefaultValue(null);
+
+            modelBuilder.Entity<Role>()
+                .Property(e => e.UpdatedAt)
+                .HasDefaultValueSql("GETDATE()");
+
             modelBuilder.Entity<Employee>()
                 .HasKey(e => e.Id);
 
+            modelBuilder.Entity<Employee>()
+                .Property(e => e.DeletedAt)
+                .HasDefaultValue(null);
+
+            modelBuilder.Entity<Employee>()
+                .Property(e => e.UpdatedAt)
+                .HasDefaultValueSql("GETDATE()");
+
             modelBuilder.Entity<User>()
                 .HasKey(e => e.Id);
+
+            modelBuilder.Entity<User>()
+                .Property(e => e.DeletedAt)
+                .HasDefaultValue(null);
+
+            modelBuilder.Entity<User>()
+                .Property(e => e.UpdatedAt)
+                .HasDefaultValueSql("GETDATE()");
+
 
             modelBuilder.Entity<Employee>()
                 .HasOne(e => e.Role)
