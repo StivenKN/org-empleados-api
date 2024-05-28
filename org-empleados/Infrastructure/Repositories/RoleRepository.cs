@@ -1,16 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
-using org_empleados.Data;
-using org_empleados.Interfaces;
-using org_empleados.Models;
+using org_empleados.Application.Interfaces;
+using org_empleados.Domain.Data;
+using org_empleados.Domain.DTOs.Roles;
+using org_empleados.Domain.Models;
 
-namespace org_empleados.Repositories
+namespace org_empleados.Infrastructure.Repositories
 {
     public class RoleRepository(ApplicationDbContext context) : IRoleRepository
     {
         private readonly ApplicationDbContext _context = context;
 
-        public async Task<bool> Create(Role role)
+        public async Task<bool> Create(CreateRoleDTO role)
         {
             await _context.Roles.AddAsync(role);
             await _context.SaveChangesAsync();

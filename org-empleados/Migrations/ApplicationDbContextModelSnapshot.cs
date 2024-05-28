@@ -3,7 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using org_empleados.Data;
+using org_empleados.Domain.Data;
 
 #nullable disable
 
@@ -40,9 +40,7 @@ namespace org_empleados.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime(6)")
-                        .HasDefaultValueSql("GETDATE()");
+                        .HasColumnType("datetime(6)");
 
                     b.HasKey("Id");
 
@@ -65,9 +63,7 @@ namespace org_empleados.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime(6)")
-                        .HasDefaultValueSql("GETDATE()");
+                        .HasColumnType("datetime(6)");
 
                     b.HasKey("Id");
 
@@ -90,9 +86,7 @@ namespace org_empleados.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime(6)")
-                        .HasDefaultValueSql("GETDATE()");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("UserName")
                         .IsRequired()

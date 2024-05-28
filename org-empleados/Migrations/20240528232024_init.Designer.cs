@@ -4,14 +4,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using org_empleados.Data;
+using org_empleados.Domain.Data;
 
 #nullable disable
 
 namespace org_empleados.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240528215117_init")]
+    [Migration("20240528232024_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -43,9 +43,7 @@ namespace org_empleados.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime(6)")
-                        .HasDefaultValueSql("GETDATE()");
+                        .HasColumnType("datetime(6)");
 
                     b.HasKey("Id");
 
@@ -68,9 +66,7 @@ namespace org_empleados.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime(6)")
-                        .HasDefaultValueSql("GETDATE()");
+                        .HasColumnType("datetime(6)");
 
                     b.HasKey("Id");
 
@@ -93,9 +89,7 @@ namespace org_empleados.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime(6)")
-                        .HasDefaultValueSql("GETDATE()");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("UserName")
                         .IsRequired()

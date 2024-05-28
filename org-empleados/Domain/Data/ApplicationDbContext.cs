@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using org_empleados.Models;
+using org_empleados.Domain.Models;
 
-namespace org_empleados.Data
+namespace org_empleados.Domain.Data
 {
     public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : DbContext(options)
     {
@@ -20,7 +20,7 @@ namespace org_empleados.Data
 
             modelBuilder.Entity<Role>()
                 .Property(e => e.UpdatedAt)
-                .HasDefaultValueSql("GETDATE()");
+                .HasDefaultValueSql(null);
 
             modelBuilder.Entity<Employee>()
                 .HasKey(e => e.Id);
@@ -31,7 +31,7 @@ namespace org_empleados.Data
 
             modelBuilder.Entity<Employee>()
                 .Property(e => e.UpdatedAt)
-                .HasDefaultValueSql("GETDATE()");
+                .HasDefaultValueSql(null);
 
             modelBuilder.Entity<User>()
                 .HasKey(e => e.Id);
@@ -42,7 +42,7 @@ namespace org_empleados.Data
 
             modelBuilder.Entity<User>()
                 .Property(e => e.UpdatedAt)
-                .HasDefaultValueSql("GETDATE()");
+                .HasDefaultValueSql(null);
 
 
             modelBuilder.Entity<Employee>()
