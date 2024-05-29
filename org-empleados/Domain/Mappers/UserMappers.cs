@@ -7,16 +7,16 @@ namespace org_empleados.Mappers
     {
         public static User ToModelFromCreateDTO(this CreateUserDTO userDTO)
         {
-            return new User { UserName = userDTO.UserName, Password = userDTO.Password, FkIdRole = userDTO.IdRole };
+            return new User { UserName = userDTO.UserName, PasswordHash = userDTO.Password, FkIdRole = userDTO.IdRole };
         }
 
         public static User ToModelFromUpdateDTO(this UpdateUserDTO userDTO)
         {
-            return new User { UserName = userDTO.UserName, Password = userDTO.Password, FkIdRole = userDTO.IdRole };
+            return new User { UserName = userDTO.UserName, PasswordHash = userDTO.Password, FkIdRole = userDTO.IdRole };
         }
         public static User ToModelFromLoginDTO(this LoginUserDTO userDTO)
         {
-            return new User { UserName = userDTO.UserName, Password = userDTO.Password };
+            return new User { UserName = userDTO.UserName, PasswordHash = userDTO.Password };
         }
     }
 }

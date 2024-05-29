@@ -29,22 +29,15 @@ namespace org_empleados.Infrastructure.Repositories
             return await _context.Users.ToListAsync();
         }
 
-        public async Task<User?> ListOne(int id)
+        public async Task<User?> ListOne(string id)
         {
             return await _context.Users.FirstOrDefaultAsync(d => d.Id == id);
-        }
-
-        public async Task<User> Login(string username)
-        {
-            User? user = await _context.Users.FirstOrDefaultAsync(d => d.UserName == username);
-            ArgumentNullException.ThrowIfNull(user, "El usuario no existe");
-            return user;
         }
 
         public async Task<User> Update(User actualUser, User newUser)
         {
             actualUser.UserName = newUser.UserName ?? actualUser.UserName;
-            actualUser.Password = newUser.Password ?? actualUser.Password;
+            actualUser.PasswordHash = newUser.PasswordHash ?? actualUser.PasswordHash;
             actualUser.FkIdRole = newUser.FkIdRole ?? actualUser.FkIdRole;
             await _context.SaveChangesAsync();
             return actualUser;

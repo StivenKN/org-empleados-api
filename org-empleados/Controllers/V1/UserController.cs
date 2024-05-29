@@ -21,7 +21,7 @@ namespace org_empleados.Controllers.V1
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> Get(int id)
+        public async Task<ActionResult<User>> Get(string id)
         {
             return await _userService.GetById(id);
         }
@@ -34,34 +34,10 @@ namespace org_empleados.Controllers.V1
             }
             await _userService.CreateUser(userDTO);
             return StatusCode(201);
-        } 
-        
-        [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginUserDTO userDTO)
-        {
-            if (!ModelState.IsValid) {
-                return BadRequest();
-            }
-            SecurityToken jwt = await _userService.Login(userDTO);
-
-            string jwtHash = jwt.UnsafeToString();
-
-            CookieOptions cookieOptions = new()
-            {
-                HttpOnly = true,
-                Expires = DateTimeOffset.UtcNow.AddMinutes(30),
-                Secure = false,
-                SameSite = SameSiteMode.Lax,
-                Path = "/"
-            };
-
-            HttpContext.Response.Cookies.Append("Authorization", jwtHash, cookieOptions);
-
-            return Ok();
         }
 
         [HttpPatch("{id}")]
-        public async Task<IActionResult> Patch(int id, [FromBody] UpdateUserDTO userDTO)
+        public async Task<IActionResult> Patch(string id, [FromBody] UpdateUserDTO userDTO)
         {
             if (!ModelState.IsValid)
             {
@@ -72,7 +48,7 @@ namespace org_empleados.Controllers.V1
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(string id)
         {
             await _userService.DeleteUser(id);
             return Ok();

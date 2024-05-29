@@ -12,7 +12,7 @@ namespace org_empleados.Mappers
 
         public static Role ToModelFromUpdateDTO(this UpdateRoleDTO roleDTO)
         {
-            return new Role { Name = roleDTO.Name, UpdatedAt = roleDTO.UpdatedAt };
+            return new Role { Name = roleDTO.Name };
         }
     }
 }

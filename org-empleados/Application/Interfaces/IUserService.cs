@@ -8,10 +8,9 @@ namespace org_empleados.Application.Interfaces
     public interface IUserService
     {
         Task<List<User>> GetAll();
-        Task<User> GetById(int id);
+        Task<User> GetById(string id);
         Task<bool> CreateUser(CreateUserDTO userDTO);
-        Task<User> UpdateUser(int id, UpdateUserDTO userDTO);
-        Task<User> DeleteUser(int id);
-        Task<SecurityToken> Login(LoginUserDTO userDTO);
+        Task<User> UpdateUser(string id, UpdateUserDTO userDTO);
+        Task<User> DeleteUser(string id);
     }
 }
