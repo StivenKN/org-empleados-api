@@ -1,4 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using org_empleados.Application.Interfaces;
+using org_empleados.Domain.DTOs.Employee;
+using org_empleados.Domain.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -6,39 +9,41 @@ namespace org_empleados.Controllers.V1
 {
     [Route("api/v1/[controller]")]
     [ApiController]
-    public class EmployeeController : ControllerBase
+    public class EmployeeController(IEmployeeService service) : ControllerBase
     {
-        // GET: api/<EmployeeController>
+        private readonly IEmployeeService _employeeService = service;
+
         [HttpGet]
-        public List<string> Get()
+        public async Task<List<Employee>> Get()
         {
-            List<string> list = ["Hola", "Adiós"];
-            return list;
+            return await _employeeService.GetAll();
         }
 
-        // GET api/<EmployeeController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<Employee> Get(int id)
         {
-            return $"value {id}";
+            return await _employeeService.GetById(id);
         }
 
-        // POST api/<EmployeeController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<IActionResult> Post([FromBody] CreateEmployeeDTO employeeDTO)
         {
+            await _employeeService.CreateEmployee(employeeDTO);
+            return Ok();
         }
 
-        // PUT api/<EmployeeController>/5
         [HttpPatch("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<IActionResult> Patch(int id, [FromBody] UpdateEmployeeDTO employeeDTO)
         {
+            await _employeeService.UpdateEmployee(id, employeeDTO);
+            return Ok();
         }
 
-        // DELETE api/<EmployeeController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
+            await _employeeService.DeleteEmployee(id);
+            return Ok();
         }
     }
 }

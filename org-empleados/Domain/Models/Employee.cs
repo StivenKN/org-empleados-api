@@ -1,17 +1,20 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace org_empleados.Domain.Models
 {
     public class Employee
     {
-        public required int Id { get; set; }
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
         public required string FirstName { get; set; }
         public required string LastName { get; set; }
         public required int FkIdRole { get; set; }
-        public required DateTime UpdatedAt { get; set; }
-        public DateTime? DeletedAt { get; set; }
-        public required Role Role { get; set; }
+        public DateTime UpdatedAt { get; set; } = DateTime.Now;
+        public DateTime? DeletedAt { get; set; } = null;
+        [JsonIgnore]
+        public Role? Role { get; set; } = null;
     }
 }

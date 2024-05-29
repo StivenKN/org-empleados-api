@@ -33,7 +33,7 @@ namespace org_empleados.Controllers.V1
         }
 
         [HttpPatch("{id}")]
-        public async Task<ActionResult<Role>> Put(int id, [FromBody] UpdateRoleDTO roleDTO)
+        public async Task<ActionResult<Role>> Patch(int id, [FromBody] UpdateRoleDTO roleDTO)
         {
             if (!ModelState.IsValid) return BadRequest();
             Role role = await _roleService.UpdateRole(id, roleDTO);

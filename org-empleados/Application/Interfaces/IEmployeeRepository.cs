@@ -1,9 +1,13 @@
-﻿namespace org_empleados.Application.Interfaces
+﻿using org_empleados.Domain.Models;
+
+namespace org_empleados.Application.Interfaces
 {
     public interface IEmployeeRepository
     {
-        Task<string> ListAll();
-        Task<bool> ListOne();
-        Task<string> Create();
+        Task<List<Employee>> ListAll();
+        Task<Employee?> ListOne(int id);
+        Task<bool> Create(Employee employee);
+        Task<Employee> Update(Employee actualEmployee, Employee newEmployee);
+        Task<Employee> Delete(Employee employee);
     }
 }
