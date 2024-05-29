@@ -1,15 +1,19 @@
-﻿using org_empleados.Application.Interfaces;
+﻿using Microsoft.IdentityModel.Tokens;
+using org_empleados.Application.Interfaces;
 using org_empleados.Application.Lib;
 using org_empleados.Domain.DTOs.Users;
 using org_empleados.Domain.Models;
-using org_empleados.Infrastructure.Repositories;
 using org_empleados.Mappers;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace org_empleados.Application.Services
 {
     public class UserService(IUserRepository repository) : IUserService
     {
         private readonly IUserRepository _userRepository = repository;
+        private readonly string _secret = "Sivesestomedescubristeahoraporfavornomehackees";
 
         public async Task<bool> CreateUser(CreateUserDTO userDTO)
         {
@@ -37,9 +41,36 @@ namespace org_empleados.Application.Services
             return user;
         }
 
-        public Task<string> Login(LoginUserDTO userDTO)
+        public async Task<SecurityToken> Login(LoginUserDTO userDTO)
         {
-            throw new NotImplementedException();
+            User user = UserMappers.LoginUserFromDTO(userDTO);
+
+            ArgumentNullException.ThrowIfNull(user.UserName);
+            ArgumentNullException.ThrowIfNull(user.Password);
+
+            User databaseUser = await _userRepository.Login(user.UserName);
+
+            ArgumentNullException.ThrowIfNull(databaseUser.Password);
+
+            bool resultHash = Encryption.ComparePassword(user.Password, databaseUser.Password);
+
+            if (resultHash != true)
+            {
+                throw new ArgumentException("Las contraseñas no coinciden");
+            }
+
+            List<Claim> claims = [new Claim(ClaimTypes.Name, user.UserName)];
+            var identity = new ClaimsIdentity(claims, "ApplicationCookie");
+
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = identity,
+                Expires = DateTime.UtcNow.AddMinutes(90), // Set token expiration time
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_secret)), SecurityAlgorithms.HmacSha256)
+            };
+
+            var jwtTokenHandler = new JwtSecurityTokenHandler();
+            return jwtTokenHandler.CreateToken(tokenDescriptor);
         }
 
         public async Task<User> UpdateUser(int id, UpdateUserDTO userDTO)

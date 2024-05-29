@@ -34,9 +34,11 @@ namespace org_empleados.Infrastructure.Repositories
             return await _context.Users.FirstOrDefaultAsync(d => d.Id == id);
         }
 
-        public Task<bool> Login(string username, string password)
+        public async Task<User> Login(string username)
         {
-            throw new NotImplementedException();
+            User? user = await _context.Users.FirstOrDefaultAsync(d => d.UserName == username);
+            ArgumentNullException.ThrowIfNull(user, "El usuario no existe");
+            return user;
         }
 
         public async Task<User> Update(User actualUser, User newUser)

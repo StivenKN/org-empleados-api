@@ -1,4 +1,5 @@
-﻿using org_empleados.Domain.DTOs.Roles;
+﻿using Microsoft.IdentityModel.Tokens;
+using org_empleados.Domain.DTOs.Roles;
 using org_empleados.Domain.DTOs.Users;
 using org_empleados.Domain.Models;
 
@@ -11,6 +12,6 @@ namespace org_empleados.Application.Interfaces
         Task<bool> CreateUser(CreateUserDTO userDTO);
         Task<User> UpdateUser(int id, UpdateUserDTO userDTO);
         Task<User> DeleteUser(int id);
-        Task<string> Login(LoginUserDTO userDTO);
+        Task<SecurityToken> Login(LoginUserDTO userDTO);
     }
 }

@@ -9,6 +9,6 @@ namespace org_empleados.Application.Interfaces
         Task<bool> Create(User user);
         Task<User> Update(User actualUser, User newUser);
         Task<User> Delete(User user);
-        Task<bool> Login(string username, string password);
+        Task<User> Login(string username);
     }
 }

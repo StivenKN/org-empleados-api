@@ -37,14 +37,14 @@ namespace org_empleados.Controllers.V1
             return StatusCode(201);
         } 
         
-        [HttpPost]
+        [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginUserDTO userDTO)
         {
             if (!ModelState.IsValid) {
                 return BadRequest();
             }
-            await _userService.Login(userDTO);
-            return Redirect("/dashboard");
+            var jwt = await _userService.Login(userDTO);
+            return Ok(jwt);
         }
 
         [HttpPatch("{id}")]
