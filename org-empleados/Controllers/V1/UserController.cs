@@ -35,6 +35,16 @@ namespace org_empleados.Controllers.V1
             }
             await _userService.CreateUser(userDTO);
             return StatusCode(201);
+        } 
+        
+        [HttpPost]
+        public async Task<IActionResult> Login([FromBody] LoginUserDTO userDTO)
+        {
+            if (!ModelState.IsValid) {
+                return BadRequest();
+            }
+            await _userService.Login(userDTO);
+            return Redirect("/dashboard");
         }
 
         [HttpPatch("{id}")]
