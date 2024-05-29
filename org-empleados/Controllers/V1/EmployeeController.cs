@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using org_empleados.Application.Interfaces;
 using org_empleados.Domain.DTOs.Employee;
 using org_empleados.Domain.Models;
@@ -9,11 +10,12 @@ namespace org_empleados.Controllers.V1
 {
     [Route("api/v1/[controller]")]
     [ApiController]
+    [Authorize]
     public class EmployeeController(IEmployeeService service) : ControllerBase
     {
         private readonly IEmployeeService _employeeService = service;
 
-        [HttpGet]
+        [HttpGet, Authorize]
         public async Task<List<Employee>> Get()
         {
             return await _employeeService.GetAll();

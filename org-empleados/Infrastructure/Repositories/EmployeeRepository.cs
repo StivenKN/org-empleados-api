@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using org_empleados.Application.Interfaces;
-using org_empleados.Application.Lib;
 using org_empleados.Domain.Data;
 using org_empleados.Domain.Models;
 
