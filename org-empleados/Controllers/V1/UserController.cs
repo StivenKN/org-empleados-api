@@ -1,9 +1,13 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
+﻿using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using org_empleados.Application.Interfaces;
 using org_empleados.Domain.DTOs.Users;
 using org_empleados.Domain.Models;
 using System.Net;
+using System.Net.Http.Headers;
+using System.Text.Json;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -43,8 +47,22 @@ namespace org_empleados.Controllers.V1
             if (!ModelState.IsValid) {
                 return BadRequest();
             }
-            var jwt = await _userService.Login(userDTO);
-            return Ok(jwt);
+            SecurityToken jwt = await _userService.Login(userDTO);
+
+            string jwtHash = jwt.UnsafeToString();
+
+            CookieOptions cookieOptions = new()
+            {
+                HttpOnly = true,
+                Expires = DateTimeOffset.UtcNow.AddMinutes(30),
+                Secure = false,
+                SameSite = SameSiteMode.Lax,
+                Path = "/"
+            };
+
+            HttpContext.Response.Cookies.Append("Authorization", jwtHash, cookieOptions);
+
+            return Ok();
         }
 
         [HttpPatch("{id}")]
