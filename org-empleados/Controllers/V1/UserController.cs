@@ -1,13 +1,8 @@
-﻿using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using org_empleados.Application.Interfaces;
 using org_empleados.Domain.DTOs.Users;
 using org_empleados.Domain.Models;
-using System.Net;
-using System.Net.Http.Headers;
-using System.Text.Json;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
