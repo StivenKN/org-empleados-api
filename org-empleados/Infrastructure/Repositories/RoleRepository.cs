@@ -11,7 +11,7 @@ namespace org_empleados.Infrastructure.Repositories
     {
         private readonly ApplicationDbContext _context = context;
 
-        public async Task<bool> Create(CreateRoleDTO role)
+        public async Task<bool> Create(Role role)
         {
             await _context.Roles.AddAsync(role);
             await _context.SaveChangesAsync();

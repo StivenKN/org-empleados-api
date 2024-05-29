@@ -1,6 +1,7 @@
 ﻿using org_empleados.Application.Interfaces;
 using org_empleados.Domain.DTOs.Roles;
 using org_empleados.Domain.Models;
+using org_empleados.Mappers;
 
 namespace org_empleados.Application.Services
 {
@@ -8,9 +9,10 @@ namespace org_empleados.Application.Services
     {
         private readonly IRoleRepository _roleRepository = repository;
 
-        public async Task<bool> CreateRole(CreateRoleDTO role)
+        public async Task<bool> CreateRole(CreateRoleDTO roleDTO)
         {
-            ArgumentNullException.ThrowIfNull(role);
+            ArgumentNullException.ThrowIfNull(roleDTO);
+            Role role = RoleMappers.CreateRoleFromDTO(roleDTO);
             return await _roleRepository.Create(role);
         }
 
@@ -33,10 +35,11 @@ namespace org_empleados.Application.Services
             return role;
         }
 
-        public async Task<Role> UpdateRole(Role role)
+        public async Task<Role> UpdateRole(int id, UpdateRoleDTO roleDTO)
         {
-            Role? actualRole = await _roleRepository.ListOne(role.Id);
+            Role? actualRole = await _roleRepository.ListOne(id);
             ArgumentNullException.ThrowIfNull(actualRole);
+            Role role = RoleMappers.UpdateRoleFromDTO(roleDTO);
             return await _roleRepository.Update(actualRole, role);
         }
     }

@@ -8,10 +8,12 @@ namespace org_empleados.Domain.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public required int Id { get; set; }
+        public int Id { get; set; }
+        [Required]
         public required string Name { get; set; }
-        public required DateTime UpdatedAt { get; set; }
-        public DateTime? DeletedAt { get; set; }
+        [Required]
+        public DateTime UpdatedAt { get; set; } = DateTime.Now;
+        public DateTime? DeletedAt { get; set; } = null;
         [JsonIgnore]
         public ICollection<Employee> Employees { get; set; } = [];
         [JsonIgnore]

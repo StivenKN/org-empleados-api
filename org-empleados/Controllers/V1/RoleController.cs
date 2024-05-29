@@ -25,18 +25,18 @@ namespace org_empleados.Controllers.V1
         }
 
         [HttpPost]
-        public async Task<ActionResult<bool>> Post([FromBody] CreateRoleDTO role)
+        public async Task<ActionResult<bool>> Post([FromBody] CreateRoleDTO roleDTO)
         {
             if (!ModelState.IsValid) return BadRequest();
-            await _roleService.CreateRole(role);
+            await _roleService.CreateRole(roleDTO);
             return Created();
         }
 
-        [HttpPut()]
-        public async Task<ActionResult<Role>> Put(int id, [FromBody] Role role)
+        [HttpPatch("{id}")]
+        public async Task<ActionResult<Role>> Put(int id, [FromBody] UpdateRoleDTO roleDTO)
         {
             if (!ModelState.IsValid) return BadRequest();
-            await _roleService.UpdateRole(role);
+            Role role = await _roleService.UpdateRole(id, roleDTO);
             return role;
         }
 
