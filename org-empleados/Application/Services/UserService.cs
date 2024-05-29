@@ -18,7 +18,7 @@ namespace org_empleados.Application.Services
         public async Task<bool> CreateUser(CreateUserDTO userDTO)
         {
             userDTO.Password = Encryption.EncryptPassword(userDTO.Password);
-            User user = UserMappers.CreateUserFromDTO(userDTO);
+            User user = userDTO.ToModelFromCreateDTO();
             return await _userRepository.Create(user);
         }
 
@@ -43,7 +43,7 @@ namespace org_empleados.Application.Services
 
         public async Task<SecurityToken> Login(LoginUserDTO userDTO)
         {
-            User user = UserMappers.LoginUserFromDTO(userDTO);
+            User user = userDTO.ToModelFromLoginDTO();
 
             ArgumentNullException.ThrowIfNull(user.UserName);
             ArgumentNullException.ThrowIfNull(user.Password);
@@ -77,7 +77,7 @@ namespace org_empleados.Application.Services
         {
             User? actualUser = await _userRepository.ListOne(id);
             ArgumentNullException.ThrowIfNull(actualUser);
-            User user = UserMappers.UpdateUserFromDTO(userDTO);
+            User user = userDTO.ToModelFromUpdateDTO();
             if (user.Password != null)
             {
                 user.Password = Encryption.EncryptPassword(user.Password);

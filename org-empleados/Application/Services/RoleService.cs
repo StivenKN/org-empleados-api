@@ -12,7 +12,7 @@ namespace org_empleados.Application.Services
         public async Task<bool> CreateRole(CreateRoleDTO roleDTO)
         {
             ArgumentNullException.ThrowIfNull(roleDTO);
-            Role role = RoleMappers.CreateRoleFromDTO(roleDTO);
+            Role role = roleDTO.ToModelFromCreateDTO();
             return await _roleRepository.Create(role);
         }
 
@@ -39,7 +39,7 @@ namespace org_empleados.Application.Services
         {
             Role? actualRole = await _roleRepository.ListOne(id);
             ArgumentNullException.ThrowIfNull(actualRole);
-            Role role = RoleMappers.UpdateRoleFromDTO(roleDTO);
+            Role role = roleDTO.ToModelFromUpdateDTO();
             return await _roleRepository.Update(actualRole, role);
         }
     }

@@ -5,16 +5,16 @@ namespace org_empleados.Mappers
 {
     public static class UserMappers
     {
-        public static User CreateUserFromDTO(CreateUserDTO userDTO)
+        public static User ToModelFromCreateDTO(this CreateUserDTO userDTO)
         {
             return new User { UserName = userDTO.UserName, Password = userDTO.Password, FkIdRole = userDTO.IdRole };
         }
 
-        public static User UpdateUserFromDTO(UpdateUserDTO userDTO)
+        public static User ToModelFromUpdateDTO(this UpdateUserDTO userDTO)
         {
             return new User { UserName = userDTO.UserName, Password = userDTO.Password, FkIdRole = userDTO.IdRole };
         }
-        public static User LoginUserFromDTO(LoginUserDTO userDTO)
+        public static User ToModelFromLoginDTO(this LoginUserDTO userDTO)
         {
             return new User { UserName = userDTO.UserName, Password = userDTO.Password };
         }

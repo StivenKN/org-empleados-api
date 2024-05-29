@@ -5,12 +5,12 @@ namespace org_empleados.Mappers
 {
     public static class RoleMappers
     {
-        public static Role CreateRoleFromDTO(CreateRoleDTO roleDTO)
+        public static Role ToModelFromCreateDTO(this CreateRoleDTO roleDTO)
         {
             return new Role { Name = roleDTO.Name }; 
         }
 
-        public static Role UpdateRoleFromDTO(UpdateRoleDTO roleDTO)
+        public static Role ToModelFromUpdateDTO(this UpdateRoleDTO roleDTO)
         {
             return new Role { Name = roleDTO.Name, UpdatedAt = roleDTO.UpdatedAt };
         }

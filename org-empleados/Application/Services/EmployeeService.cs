@@ -11,7 +11,7 @@ namespace org_empleados.Application.Services
 
         public async Task<bool> CreateEmployee(CreateEmployeeDTO employeeDTO)
         {
-            Employee employee = employeeDTO.CreateEmployeeFromDTO();
+            Employee employee = employeeDTO.ToModelFromCreateDTO();
             await _employeeRepository.Create(employee);
             return true;
         }
@@ -37,7 +37,7 @@ namespace org_empleados.Application.Services
 
         public async Task<Employee> UpdateEmployee(int id, UpdateEmployeeDTO employeeDTO)
         {
-            Employee employee = employeeDTO.UpdateEmployeeFromDTO();
+            Employee employee = employeeDTO.ToModelFromUpdateDTO();
             Employee? actualEmployee = await _employeeRepository.ListOne(id);
             ArgumentNullException.ThrowIfNull(actualEmployee);
             return await _employeeRepository.Update(actualEmployee, employee);

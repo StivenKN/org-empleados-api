@@ -5,12 +5,12 @@ namespace org_empleados.Domain.Mappers
 {
     public static class EmployeeMappers
     {
-        public static Employee CreateEmployeeFromDTO(this CreateEmployeeDTO employeeDTO)
+        public static Employee ToModelFromCreateDTO(this CreateEmployeeDTO employeeDTO)
         {
             return new Employee { FirstName = employeeDTO.FirstName, FkIdRole = employeeDTO.FkIdRole, LastName = employeeDTO.LastName };
         }
 
-        public static Employee UpdateEmployeeFromDTO(this UpdateEmployeeDTO employeeDTO)
+        public static Employee ToModelFromUpdateDTO(this UpdateEmployeeDTO employeeDTO)
         {
             return new Employee { FirstName = employeeDTO.FirstName, FkIdRole = employeeDTO.FkIdRole, LastName = employeeDTO.LastName };
         }
