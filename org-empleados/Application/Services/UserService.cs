@@ -49,8 +49,7 @@ namespace org_empleados.Application.Services
             User user = UserMappers.UpdateUserFromDTO(userDTO);
             if (user.Password != null)
             {
-                ArgumentNullException.ThrowIfNull(userDTO.Password);
-                userDTO.Password = Encryption.EncryptPassword(userDTO.Password);
+                user.Password = Encryption.EncryptPassword(user.Password);
             }
             return await _userRepository.Update(actualUser, user);
         }

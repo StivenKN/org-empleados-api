@@ -28,7 +28,7 @@ namespace org_empleados.Controllers.V1
         }
 
         [HttpPost]
-        public async Task<ActionResult<StatusCodeResult>> Post([FromBody] CreateUserDTO userDTO)
+        public async Task<IActionResult> Post([FromBody] CreateUserDTO userDTO)
         {
             if (!ModelState.IsValid) {
                 return BadRequest();
@@ -38,7 +38,7 @@ namespace org_empleados.Controllers.V1
         }
 
         [HttpPatch("{id}")]
-        public async Task<ActionResult<Ok>> Patch(int id, [FromBody] UpdateUserDTO userDTO)
+        public async Task<IActionResult> Patch(int id, [FromBody] UpdateUserDTO userDTO)
         {
             if (!ModelState.IsValid)
             {
@@ -49,7 +49,7 @@ namespace org_empleados.Controllers.V1
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Ok>> Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             await _userService.DeleteUser(id);
             return Ok();
