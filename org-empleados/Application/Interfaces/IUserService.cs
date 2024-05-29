@@ -11,5 +11,6 @@ namespace org_empleados.Application.Interfaces
         Task<bool> CreateUser(CreateUserDTO userDTO);
         Task<User> UpdateUser(int id, UpdateUserDTO userDTO);
         Task<User> DeleteUser(int id);
+        Task<string> Login(LoginUserDTO userDTO);
     }
 }

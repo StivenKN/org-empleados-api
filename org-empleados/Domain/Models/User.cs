@@ -9,9 +9,9 @@ namespace org_empleados.Domain.Models
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [Required]
-        public required string UserName { get; set; }
+        public string? UserName { get; set; }
         [Required, MinLength(8)]
-        public required string Password { get; set; }
+        public string? Password { get; set; }
         [Required]
         public int? FkIdRole { get; set; } = 2;
         public DateTime UpdatedAt { get; set; } = DateTime.Now;

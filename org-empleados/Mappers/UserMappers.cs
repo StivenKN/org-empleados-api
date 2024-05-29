@@ -12,7 +12,7 @@ namespace org_empleados.Mappers
 
         public static User UpdateUserFromDTO(UpdateUserDTO userDTO)
         {
-            return new User { UserName = userDTO.UserName, Password = userDTO.Password };
+            return new User { UserName = userDTO.UserName, Password = userDTO.Password, FkIdRole = userDTO.IdRole };
         }
     }
 }

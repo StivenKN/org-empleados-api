@@ -2,7 +2,6 @@
 using org_empleados.Application.Interfaces;
 using org_empleados.Domain.Data;
 using org_empleados.Domain.Models;
-using System.Data;
 
 namespace org_empleados.Infrastructure.Repositories
 {
@@ -42,8 +41,9 @@ namespace org_empleados.Infrastructure.Repositories
 
         public async Task<User> Update(User actualUser, User newUser)
         {
-            actualUser.UserName = newUser.UserName;
-            actualUser.Password = newUser.Password;
+            actualUser.UserName = newUser.UserName ?? actualUser.UserName;
+            actualUser.Password = newUser.Password ?? actualUser.Password;
+            actualUser.FkIdRole = newUser.FkIdRole ?? actualUser.FkIdRole;
             await _context.SaveChangesAsync();
             return actualUser;
         }

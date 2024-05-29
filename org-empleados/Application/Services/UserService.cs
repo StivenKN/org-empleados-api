@@ -2,6 +2,7 @@
 using org_empleados.Application.Lib;
 using org_empleados.Domain.DTOs.Users;
 using org_empleados.Domain.Models;
+using org_empleados.Infrastructure.Repositories;
 using org_empleados.Mappers;
 
 namespace org_empleados.Application.Services
@@ -17,24 +18,41 @@ namespace org_empleados.Application.Services
             return await _userRepository.Create(user);
         }
 
-        public Task<User> DeleteUser(int id)
+        public async Task<User> DeleteUser(int id)
+        {
+            User? user = await _userRepository.ListOne(id);
+            ArgumentNullException.ThrowIfNull(user);
+            return await _userRepository.Delete(user);
+        }
+
+        public async Task<List<User>> GetAll()
+        {
+            return await _userRepository.ListAll();
+        }
+
+        public async Task<User> GetById(int id)
+        {
+            User? user = await _userRepository.ListOne(id);
+            ArgumentNullException.ThrowIfNull(user);
+            return user;
+        }
+
+        public Task<string> Login(LoginUserDTO userDTO)
         {
             throw new NotImplementedException();
         }
 
-        public Task<List<User>> GetAll()
+        public async Task<User> UpdateUser(int id, UpdateUserDTO userDTO)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<User> GetById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<User> UpdateUser(int id, UpdateUserDTO userDTO)
-        {
-            throw new NotImplementedException();
+            User? actualUser = await _userRepository.ListOne(id);
+            ArgumentNullException.ThrowIfNull(actualUser);
+            User user = UserMappers.UpdateUserFromDTO(userDTO);
+            if (user.Password != null)
+            {
+                ArgumentNullException.ThrowIfNull(userDTO.Password);
+                userDTO.Password = Encryption.EncryptPassword(userDTO.Password);
+            }
+            return await _userRepository.Update(actualUser, user);
         }
     }
 }

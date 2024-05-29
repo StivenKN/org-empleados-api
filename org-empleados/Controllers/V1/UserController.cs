@@ -2,28 +2,29 @@
 using Microsoft.AspNetCore.Mvc;
 using org_empleados.Application.Interfaces;
 using org_empleados.Domain.DTOs.Users;
+using org_empleados.Domain.Models;
 using System.Net;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace org_empleados.Controllers.V1
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class UserController(IUserService userService) : ControllerBase
     {
         private readonly IUserService _userService = userService;
 
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<ActionResult<List<User>>> Get()
         {
-            return new string[] { "value1", "value2" };
+            return await _userService.GetAll();
         }
 
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<ActionResult<User>> Get(int id)
         {
-            return "value";
+            return await _userService.GetById(id);
         }
 
         [HttpPost]
@@ -36,14 +37,22 @@ namespace org_empleados.Controllers.V1
             return StatusCode(201);
         }
 
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPatch("{id}")]
+        public async Task<ActionResult<Ok>> Patch(int id, [FromBody] UpdateUserDTO userDTO)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            await _userService.UpdateUser(id, userDTO);
+            return Ok();
         }
 
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<ActionResult<Ok>> Delete(int id)
         {
+            await _userService.DeleteUser(id);
+            return Ok();
         }
     }
 }
