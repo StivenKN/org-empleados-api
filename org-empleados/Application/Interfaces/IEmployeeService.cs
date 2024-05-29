@@ -1,5 +1,4 @@
 ﻿using org_empleados.Domain.DTOs.Employee;
-using org_empleados.Domain.DTOs.Roles;
 using org_empleados.Domain.Models;
 
 namespace org_empleados.Application.Interfaces

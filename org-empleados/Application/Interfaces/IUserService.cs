@@ -1,16 +1,11 @@
-﻿using Microsoft.IdentityModel.Tokens;
-using org_empleados.Domain.DTOs.Roles;
-using org_empleados.Domain.DTOs.Users;
-using org_empleados.Domain.Models;
+﻿using org_empleados.Domain.Models;
 
 namespace org_empleados.Application.Interfaces
 {
     public interface IUserService
     {
         Task<List<User>> GetAll();
-        Task<User> GetById(string id);
-        Task<bool> CreateUser(CreateUserDTO userDTO);
-        Task<User> UpdateUser(string id, UpdateUserDTO userDTO);
-        Task<User> DeleteUser(string id);
+        Task<User> GetByUsername(string username);
+        Task<User> DeleteUser(string username);
     }
 }

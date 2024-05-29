@@ -32,36 +32,12 @@ namespace org_empleados.Migrations
                 .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "AspNetRoleClaims",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    RoleId = table.Column<string>(type: "varchar(255)", nullable: false),
-                    ClaimType = table.Column<string>(type: "longtext", nullable: true),
-                    ClaimValue = table.Column<string>(type: "longtext", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetRoleClaims", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "AspNetRoles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySQL:Charset", "utf8mb4");
-
-            migrationBuilder.CreateTable(
                 name: "AspNetUsers",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "varchar(255)", nullable: false),
-                    FkIdRole = table.Column<int>(type: "int", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     DeletedAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    RoleId = table.Column<string>(type: "varchar(255)", nullable: true),
                     UserName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
@@ -80,11 +56,28 @@ namespace org_empleados.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "AspNetRoleClaims",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    RoleId = table.Column<string>(type: "varchar(255)", nullable: false),
+                    ClaimType = table.Column<string>(type: "longtext", nullable: true),
+                    ClaimValue = table.Column<string>(type: "longtext", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetRoleClaims", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AspNetUsers_AspNetRoles_RoleId",
+                        name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
 
@@ -231,11 +224,6 @@ namespace org_empleados.Migrations
                 name: "EmailIndex",
                 table: "AspNetUsers",
                 column: "NormalizedEmail");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_RoleId",
-                table: "AspNetUsers",
-                column: "RoleId");
 
             migrationBuilder.CreateIndex(
                 name: "UserNameIndex",

@@ -11,7 +11,7 @@ using org_empleados.Domain.Data;
 namespace org_empleados.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240529210836_Init")]
+    [Migration("20240529213607_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -214,10 +214,6 @@ namespace org_empleados.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<int?>("FkIdRole")
-                        .IsRequired()
-                        .HasColumnType("int");
-
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("tinyint(1)");
 
@@ -241,9 +237,6 @@ namespace org_empleados.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<string>("RoleId")
-                        .HasColumnType("varchar(255)");
-
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("longtext");
 
@@ -265,8 +258,6 @@ namespace org_empleados.Migrations
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex");
-
-                    b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUsers", (string)null);
                 });
@@ -330,15 +321,6 @@ namespace org_empleados.Migrations
                 });
 
             modelBuilder.Entity("org_empleados.Domain.Models.Employee", b =>
-                {
-                    b.HasOne("org_empleados.Domain.Models.Role", "Role")
-                        .WithMany()
-                        .HasForeignKey("RoleId");
-
-                    b.Navigation("Role");
-                });
-
-            modelBuilder.Entity("org_empleados.Domain.Models.User", b =>
                 {
                     b.HasOne("org_empleados.Domain.Models.Role", "Role")
                         .WithMany()
