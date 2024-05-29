@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using org_empleados.Application.Interfaces;
 using org_empleados.Application.Services;
@@ -8,7 +9,9 @@ using org_empleados.Infrastructure.Repositories;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-var connectionDb = builder.Configuration.GetConnectionString("dbConn");
+string? connectionDb = builder.Configuration.GetConnectionString("dbConn");
+
+ArgumentNullException.ThrowIfNull(connectionDb);
 
 builder.Services.AddDbContext<ApplicationDbContext>(opt => opt.UseMySQL(connectionDb));
 
