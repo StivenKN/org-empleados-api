@@ -11,7 +11,7 @@ using org_empleados.Domain.Data;
 namespace org_empleados.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240528232024_init")]
+    [Migration("20240529011300_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -22,7 +22,7 @@ namespace org_empleados.Migrations
                 .HasAnnotation("ProductVersion", "8.0.6")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("org_empleados.Models.Employee", b =>
+            modelBuilder.Entity("org_empleados.Domain.Models.Employee", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -52,7 +52,7 @@ namespace org_empleados.Migrations
                     b.ToTable("Employees");
                 });
 
-            modelBuilder.Entity("org_empleados.Models.Role", b =>
+            modelBuilder.Entity("org_empleados.Domain.Models.Role", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -73,15 +73,17 @@ namespace org_empleados.Migrations
                     b.ToTable("Roles");
                 });
 
-            modelBuilder.Entity("org_empleados.Models.User", b =>
+            modelBuilder.Entity("org_empleados.Domain.Models.User", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("varchar(255)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int>("FkIdRole")
+                    b.Property<int?>("FkIdRole")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("Password")
@@ -102,9 +104,9 @@ namespace org_empleados.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("org_empleados.Models.Employee", b =>
+            modelBuilder.Entity("org_empleados.Domain.Models.Employee", b =>
                 {
-                    b.HasOne("org_empleados.Models.Role", "Role")
+                    b.HasOne("org_empleados.Domain.Models.Role", "Role")
                         .WithMany("Employees")
                         .HasForeignKey("FkIdRole")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -113,9 +115,9 @@ namespace org_empleados.Migrations
                     b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("org_empleados.Models.User", b =>
+            modelBuilder.Entity("org_empleados.Domain.Models.User", b =>
                 {
-                    b.HasOne("org_empleados.Models.Role", "Role")
+                    b.HasOne("org_empleados.Domain.Models.Role", "Role")
                         .WithMany("Users")
                         .HasForeignKey("FkIdRole")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -124,7 +126,7 @@ namespace org_empleados.Migrations
                     b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("org_empleados.Models.Role", b =>
+            modelBuilder.Entity("org_empleados.Domain.Models.Role", b =>
                 {
                     b.Navigation("Employees");
 

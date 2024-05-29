@@ -59,7 +59,8 @@ namespace org_empleados.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "varchar(255)", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     UserName = table.Column<string>(type: "longtext", nullable: false),
                     Password = table.Column<string>(type: "longtext", nullable: false),
                     FkIdRole = table.Column<int>(type: "int", nullable: false),
