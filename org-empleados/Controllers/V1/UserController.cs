@@ -14,6 +14,21 @@ namespace org_empleados.Controllers.V1
     {
         private readonly IUserService _userService = userService;
 
+        [HttpGet("auth")]
+        public IActionResult ValidateToken()
+        {
+            var principal = HttpContext.User;
+            ArgumentNullException.ThrowIfNull(principal.Identity);
+            if (principal.Identity.IsAuthenticated && !string.IsNullOrEmpty(principal.Identity.Name))
+            {
+                return Ok(new { message = "Token válido" });
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
         [HttpGet]
         public async Task<ActionResult<List<User>>> Get()
         {
