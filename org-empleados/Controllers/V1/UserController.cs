@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using org_empleados.Application.Interfaces;
 using org_empleados.Domain.Models;
+using Microsoft.AspNetCore.Identity;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -14,7 +16,7 @@ namespace org_empleados.Controllers.V1
     {
         private readonly IUserService _userService = userService;
 
-        [HttpGet("auth")]
+        [HttpGet("/api/v1/auth")]
         public IActionResult ValidateToken()
         {
             var principal = HttpContext.User;
@@ -27,6 +29,13 @@ namespace org_empleados.Controllers.V1
             {
                 return NotFound();
             }
+        }
+
+        [HttpGet("/api/v1/logout")]
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(IdentityConstants.ApplicationScheme);
+            return Redirect("/");
         }
 
         [HttpGet]

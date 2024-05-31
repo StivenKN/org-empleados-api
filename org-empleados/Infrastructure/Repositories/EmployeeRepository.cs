@@ -26,7 +26,12 @@ namespace org_empleados.Infrastructure.Repositories
 
         public async Task<List<Employee>> ListAll()
         {
-            return await _context.Employees.ToListAsync();
+            return await _context.Employees.Where(d => d.DeletedAt == null).ToListAsync();
+        }
+
+        public async Task<List<Employee>> ListAllUnactive()
+        {
+            return await _context.Employees.Where(d => d.DeletedAt != null).ToListAsync();
         }
 
         public async Task<Employee?> ListOne(int id)
