@@ -16,9 +16,9 @@ namespace org_empleados.Controllers.V1
         private readonly IEmployeeService _employeeService = service;
 
         [HttpGet, Authorize]
-        public async Task<List<Employee>> Get()
+        public async Task<List<Employee>> Get([FromQuery] bool activeEmployees = true)
         {
-            return await _employeeService.GetAll();
+            return await _employeeService.GetAll(activeEmployees);
         }
 
         [HttpGet("{id}")]

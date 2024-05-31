@@ -23,8 +23,12 @@ namespace org_empleados.Application.Services
             return await _employeeRepository.Delete(employee);
         }
 
-        public async Task<List<Employee>> GetAll()
+        public async Task<List<Employee>> GetAll(bool activeEmployees)
         {
+            if (!activeEmployees)
+            {
+                return await _employeeRepository.ListAllUnactive();
+            }
             return await _employeeRepository.ListAll();
         }
 

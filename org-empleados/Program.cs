@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.HttpLogging;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using org_empleados.Application.Interfaces;
@@ -7,6 +8,18 @@ using org_empleados.Domain.Models;
 using org_empleados.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddW3CLogging(logging =>
+{
+    logging.LoggingFields = W3CLoggingFields.All;
+
+    logging.AdditionalRequestHeaders.Add("x-forwarded-for");
+    logging.AdditionalRequestHeaders.Add("x-client-ssl-protocol");
+    logging.FileSizeLimit = 5 * 1024 * 1024;
+    logging.RetainedFileCountLimit = 2;
+    logging.FileName = "MyLogFile";
+    logging.FlushInterval = TimeSpan.FromSeconds(2);
+});
 
 // Add services to the container.
 string? connectionDb = builder.Configuration.GetConnectionString("dbConn");
@@ -44,6 +57,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+app.UseW3CLogging();
 
 app.UseCors("MiPoliticaCORS");
 
